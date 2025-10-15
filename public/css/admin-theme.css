@@ -1,0 +1,147 @@
+/* === TEXTURE PROPERTY ADMIN THEME === */
+
+/* Global Style */
+body {
+    background-color: #f5f6fa;
+    font-family: "Open Sans", Arial, sans-serif;
+    color: #333;
+}
+
+/* Sidebar */
+.sidebar {
+    background: #1e2a35;
+    min-height: 100vh;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.sidebar h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.sidebar .nav-link {
+    color: #cfd8dc;
+    font-weight: 500;
+    padding: 10px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.sidebar .nav-link.active {
+    background-color: #007bff !important;
+    color: #fff !important;
+    font-weight: 600;
+}
+
+.sidebar .collapse .nav-link {
+    font-size: 0.9rem;
+    margin-left: 8px;
+}
+
+/* Top Navbar */
+.navbar {
+    background-color: #fff;
+    border-bottom: 1px solid #dee2e6;
+    height: 60px;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: #007bff !important;
+}
+
+.navbar .btn-outline-light {
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+}
+
+.navbar .btn-outline-light:hover {
+    background-color: #0056b3;
+}
+
+/* Dashboard Cards */
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+.card-header {
+    font-weight: 600;
+    background: #007bff;
+    color: #fff;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.card-body {
+    background-color: #fff;
+    border-radius: 0 0 10px 10px;
+}
+
+.card .display-6 {
+    font-size: 2rem;
+    color: #007bff;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-outline-secondary {
+    border-radius: 6px;
+}
+
+/* Form Controls */
+.form-control,
+.form-select {
+    border-radius: 6px;
+    box-shadow: none;
+    border: 1px solid #ccc;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+/* Tables */
+.table thead {
+    background-color: #e9ecef;
+    font-weight: 600;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Alerts */
+.alert-success {
+    background-color: #e8f5e9;
+    border: 1px solid #c8e6c9;
+    color: #2e7d32;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .sidebar {
+        min-height: auto;
+        position: relative;
+    }
+}
