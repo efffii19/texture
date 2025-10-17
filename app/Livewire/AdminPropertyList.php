@@ -89,11 +89,11 @@ class AdminPropertyList extends Component
             }
         }
 
-        // normalize amenities: accept comma-separated string or array
+        // Normalize amenities
         $amenities = is_array($this->amenities)
             ? $this->amenities
             : array_filter(array_map('trim', explode(',', (string) $this->amenities)));
-        // Build payload conditionally depending on which columns exist in DB.
+
         $saveData = [];
         $has = fn($col) => Schema::hasColumn('properties', $col);
 
@@ -112,23 +112,12 @@ class AdminPropertyList extends Component
         if ($has('price')) {
             $saveData['price'] = $this->price;
         }
-        // transaction_type may be a dedicated column or stored in legacy `type` column
         if ($has('transaction_type')) {
             $saveData['transaction_type'] = $this->transaction_type;
-        } elseif ($has('type')) {
-            $saveData['type'] = $this->transaction_type;
         }
-
         if ($has('property_type')) {
             $saveData['property_type'] = $this->property_type;
-        } elseif ($has('type')) {
-            // if legacy table used `type` for property type, populate it when appropriate
-            // only set if we haven't already set `type` from transaction_type
-            if (!isset($saveData['type'])) {
-                $saveData['type'] = $this->property_type;
-            }
         }
-
         if ($has('bedrooms')) {
             $saveData['bedrooms'] = $this->bedrooms;
         }
@@ -156,14 +145,9 @@ class AdminPropertyList extends Component
         if ($has('amenities')) {
             $saveData['amenities'] = $amenities;
         }
-
-        // images handling: prefer JSON 'images' column, fall back to legacy 'image' string
         if ($has('images')) {
             $saveData['images'] = $imagePaths;
-        } elseif ($has('image')) {
-            $saveData['image'] = $imagePaths[0] ?? null;
         }
-
         if ($has('map_iframe')) {
             $saveData['map_iframe'] = $this->map_iframe;
         }
@@ -186,13 +170,13 @@ class AdminPropertyList extends Component
             $saveData['is_published'] = $this->is_published;
         }
 
-        $property = Property::create($saveData);
+        Property::create($saveData);
 
         $this->resetForm();
-        // flash a session message so the Blade alert (session('success')) shows
         session()->flash('success', 'Property added successfully!');
         $this->dispatch('toast', type: 'success', message: 'Property added successfully!');
     }
+
 
     public function editProperty($id)
     {
@@ -262,11 +246,10 @@ class AdminPropertyList extends Component
             }
         }
 
-        // normalize amenities for update as well
         $amenities = is_array($this->amenities)
             ? $this->amenities
             : array_filter(array_map('trim', explode(',', (string) $this->amenities)));
-        // Build update payload conditionally depending on DB columns
+
         $updateData = [];
         $has = fn($col) => Schema::hasColumn('properties', $col);
 
@@ -287,18 +270,10 @@ class AdminPropertyList extends Component
         }
         if ($has('transaction_type')) {
             $updateData['transaction_type'] = $this->transaction_type;
-        } elseif ($has('type')) {
-            $updateData['type'] = $this->transaction_type;
         }
-
         if ($has('property_type')) {
             $updateData['property_type'] = $this->property_type;
-        } elseif ($has('type')) {
-            if (!isset($updateData['type'])) {
-                $updateData['type'] = $this->property_type;
-            }
         }
-
         if ($has('bedrooms')) {
             $updateData['bedrooms'] = $this->bedrooms;
         }
@@ -326,13 +301,9 @@ class AdminPropertyList extends Component
         if ($has('amenities')) {
             $updateData['amenities'] = $amenities;
         }
-
         if ($has('images')) {
             $updateData['images'] = $newImages;
-        } elseif ($has('image')) {
-            $updateData['image'] = $newImages[0] ?? null;
         }
-
         if ($has('map_iframe')) {
             $updateData['map_iframe'] = $this->map_iframe;
         }
@@ -357,11 +328,11 @@ class AdminPropertyList extends Component
 
         $property->update($updateData);
 
-
         $this->resetForm();
         session()->flash('success', 'Property updated successfully!');
         $this->dispatch('toast', type: 'success', message: 'Property updated successfully!');
     }
+
 
     // -------------------------
     // DELETE OPERATIONS
@@ -435,7 +406,7 @@ class AdminPropertyList extends Component
         $properties = Property::where('title', 'like', '%' . $this->search . '%')
             ->orWhere('property_type', 'like', '%' . $this->search . '%')
             ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate(5);
+            ->paginate(20);
 
         return view('livewire.admin-property-list', compact('properties'));
     }

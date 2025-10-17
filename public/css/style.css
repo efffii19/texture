@@ -96,6 +96,36 @@ body{
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
+.property_list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding-bottom: 10px;
+    transition: transform 0.2s ease;
+}
+
+.property_list:hover {
+    transform: scale(1.02);
+    border-color: #8c704b;
+}
+
+.bottom_two .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.bottom_two .col-lg-3,
+.bottom_two .col-md-4,
+.bottom_two .col-sm-6 {
+    float: none !important;
+    display: flex;
+}
+
 #cssmenu:after,
 #cssmenu > ul:after {
   content: ".";

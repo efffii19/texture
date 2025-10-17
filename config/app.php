@@ -86,6 +86,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Default Enquiry Email
+    |--------------------------------------------------------------------------
+    |
+    | This email is used as a fallback for property enquiries when no company
+    | email is provided.
+    |
+    */
+
+    'enquiry_email' => env('DEFAULT_ENQUIRY_EMAIL', 'info@example.com'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
     |

@@ -302,84 +302,19 @@
 
 
 
-    {{-- PROPERTY TABLE --}}
-    {{-- <div class="card border-0 shadow-sm border-radius-xl">
-        <div class="card-header bg-gradient-secondary text-white border-radius-lg p-3">
-            <h6 class="mb-0 fw-bold">📋 All Properties</h6>
-        </div>
-
-        <div class="card-body bg-white">
-            <div class="table-responsive">
-                <table class="table align-items-center mb-0">
-                    <thead class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">
-                        <tr>
-                            <th>Title</th>
-                            <th>Type</th>
-                            <th>Price</th>
-                            <th>Transaction</th>
-                            <th>Images</th>
-                            <th>Published</th>
-                            <th class="text-end">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($properties as $property)
-                            <tr class="border-bottom">
-                                <td class="fw-semibold">{{ $property->title }}</td>
-                                <td>{{ $property->property_type ?? '-' }}</td>
-                                <td>{{ number_format($property->price ?? 0, 0) }}</td>
-                                <td><span
-                                        class="badge bg-gradient-info">{{ ucfirst($property->transaction_type) }}</span>
-                                </td>
-                                <td>
-                                    @if ($property->images)
-                                        <div class="d-flex flex-wrap gap-1">
-                                            @foreach ($property->images as $img)
-                                                <img src="{{ asset('storage/' . $img) }}" width="45"
-                                                    height="45" class="rounded shadow-sm"
-                                                    style="object-fit: cover;">
-                                            @endforeach
-                                        </div>
-                                    @else
-                                        <span class="text-muted">No images</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <span
-                                        class="badge bg-gradient-{{ $property->is_published ? 'success' : 'secondary' }}">
-                                        {{ $property->is_published ? 'Yes' : 'No' }}
-                                    </span>
-                                </td>
-                                <td class="text-end">
-                                    <button wire:click="editProperty({{ $property->id }})"
-                                        class="btn btn-sm btn-warning text-white">Edit</button>
-                                    <button wire:click="confirmDelete({{ $property->id }})"
-                                        class="btn btn-sm btn-danger">Delete</button>
-
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7" class="text-center text-muted py-4">No properties found.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div> --}}
+    {{-- PROPERTY Grid View --}}
     <section id="property-list" class="my-4">
         <div class="container mt-4">
             <div class="row g-4">
                 @forelse($properties as $property)
-                    <div class="col-md-6">
+                    <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="card border-0 shadow-sm h-100">
                             @if (!empty($property->images[0]))
                                 <img src="{{ asset('storage/' . $property->images[0]) }}" class="card-img-top"
-                                    alt="{{ $property->title }}" style="height: 200px; object-fit: cover;">
+                                    alt="{{ $property->title }}" style="height: 150px; object-fit: cover;">
                             @else
                                 <img src="https://via.placeholder.com/400x200?text=No+Image" class="card-img-top"
-                                    alt="No Image" style="height: 200px; object-fit: cover;">
+                                    alt="No Image" style="height: 150px; object-fit: cover;">
                             @endif
 
                             <div class="card-body">
@@ -396,7 +331,7 @@
                                     </span>
                                 </p>
                                 <div class="d-flex flex-wrap gap-1 mb-2">
-                                    @if ($property->images)
+                                    @if (!empty($property->images))
                                         @foreach ($property->images as $img)
                                             <img src="{{ asset('storage/' . $img) }}" width="45" height="45"
                                                 class="rounded shadow-sm" style="object-fit: cover;">

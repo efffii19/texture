@@ -8,6 +8,7 @@
     <title>Texture Property</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+    @livewireStyles
 </head>
 
 <body>
@@ -129,74 +130,8 @@
     </div><!--END OF BANNER SECTION-->
     <div class="clearfix"></div>
     <div class="container">
-        <div class="col-lg-6">
-            <div class="feature">
-                <h3>featured properties for sale</h3>
-                <ul id="flexiselDemo1">
-                    @foreach ($featuredForSale as $prop)
-                        <li>
-                            <div class="team-grid">
-                                @php
-                                    $img = 'images/pro1.jpg';
-                                    if (!empty($prop->images) && is_array($prop->images) && count($prop->images)) {
-                                        $img = asset('storage/' . $prop->images[0]);
-                                    } elseif (!empty($prop->image)) {
-                                        $img = asset('storage/' . $prop->image);
-                                    }
-                                @endphp
-                                <img src="{{ $img }}" alt="" />
-                                <div class="spec">
-                                    <h4>AED {{ number_format($prop->price ?? 0, 0) }}</h4>
-                                    <ul>
-                                        <li><img src="images/bed.png" /> {{ $prop->bedrooms ?? '-' }}</li>
-                                        <li><img src="images/bath.png" /> {{ $prop->bathrooms ?? '-' }}</li>
-                                    </ul>
-                                </div>
-                                <div class="clearfix"></div>
-                                <p>{{ Str::limit($prop->description ?? ($prop->description_long ?? 'No description'), 80) }}
-                                </p>
-                                <p><span>{{ $prop->location ?? '-' }}</span></p>
-                            </div>
-                        </li>
-                    @endforeach
-                </ul>
-            </div><!--END OF FEATURE-->
-        </div><!--END OF COL LG 6-->
-        <div class="col-lg-6">
-            <div class="feature">
-                <h3>featured properties for rent</h3>
-                <ul id="flexiselDemo2">
-                    @foreach ($featuredForRent as $prop)
-                        <li>
-                            <div class="team-grid">
-                                @php
-                                    $img = 'images/pro1.jpg';
-                                    if (!empty($prop->images) && is_array($prop->images) && count($prop->images)) {
-                                        $img = asset('storage/' . $prop->images[0]);
-                                    } elseif (!empty($prop->image)) {
-                                        $img = asset('storage/' . $prop->image);
-                                    }
-                                @endphp
-                                <img src="{{ $img }}" alt="" />
-                                <div class="spec">
-                                    <h4>AED {{ number_format($prop->price ?? 0, 0) }}</h4>
-                                    <ul>
-                                        <li><img src="images/bed.png" /> {{ $prop->bedrooms ?? '-' }}</li>
-                                        <li><img src="images/bath.png" /> {{ $prop->bathrooms ?? '-' }}</li>
-                                    </ul>
-                                </div>
-                                <div class="clearfix"></div>
-                                <p>{{ Str::limit($prop->description ?? ($prop->description_long ?? 'No description'), 80) }}
-                                </p>
-                                <p><span>{{ $prop->location ?? '-' }}</span></p>
-                            </div>
-                        </li>
-                    @endforeach
-                </ul>
-
-
-            </div><!--END OF FEATURE-->
-        </div><!--END OF COL LG 6-->
+        @livewire('featured-properties-for-sale')
+        @livewire('featured-properties-for-rent')
         <div class="clearfix"></div>
 
         <div class="welcome">
@@ -219,45 +154,7 @@
 
         <div class="bottom_two">
 
-            <div class="col-lg-9">
-                <div class="main_list">
-                    <h3>lattest property listed</h3>
-                    <div class="row">
-                        @foreach ($latestProperties as $prop)
-                            <div class="col-lg-3 col-md-4">
-                                <div class="property_list">
-                                    <a href="#">
-                                        @php
-                                            $img = 'images/pro5.jpg';
-                                            if (
-                                                !empty($prop->images) &&
-                                                is_array($prop->images) &&
-                                                count($prop->images)
-                                            ) {
-                                                $img = asset('storage/' . $prop->images[0]);
-                                            } elseif (!empty($prop->image)) {
-                                                $img = asset('storage/' . $prop->image);
-                                            }
-                                        @endphp
-                                        <img src="{{ $img }}" alt="" class="img-responsive" />
-                                        <div class="spec">
-                                            <h4>AED {{ number_format($prop->price ?? 0, 0) }}</h4>
-                                            <ul>
-                                                <li><img src="images/bed2.jpg" /> {{ $prop->bedrooms ?? '-' }}</li>
-                                                <li><img src="images/bath2.jpg" /> {{ $prop->bathrooms ?? '-' }}</li>
-                                            </ul>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <p>{{ Str::limit($prop->description ?? ($prop->description_long ?? 'No description'), 80) }}
-                                        </p>
-                                        <p><span>{{ $prop->location ?? '-' }}</span></p>
-                                    </a>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div><!--END OF ROW-->
-                </div><!--END OF MAIN LIST-->
-            </div><!--END OF COL LG 8-->
+            @livewire('latest-properties')
 
             <div class="col-lg-3">
                 <div class="blog">
@@ -434,6 +331,7 @@
         });
     </script>
     <script type="text/javascript" src="js/jquery.flexisel.js"></script>
+    @livewireScripts
 
 </body>
 

@@ -138,10 +138,15 @@ body {
     color: #2e7d32;
 }
 
-/* Responsive */
-@media (max-width: 992px) {
-    .sidebar {
-        min-height: auto;
-        position: relative;
-    }
+/* Card Body in Property Grid */
+#property-list .card-body {
+    font-size: 0.875rem;
+}
+
+#property-list .card-title {
+    font-size: 1rem;
+}
+
+#property-list .badge {
+    font-size: 0.75rem;
 }
