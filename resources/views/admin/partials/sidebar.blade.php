@@ -75,14 +75,6 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link text-white {{ request()->routeIs('admin.site-content') ? 'active bg-gradient-primary' : '' }}"
-                    href="#">
-                    <i class="ni ni-single-copy-04 text-lg opacity-10"></i>
-                    <span class="nav-link-text ms-1">Site Content</span>
-                </a>
-            </li>
-            <!-- Add Property -->
-            <li class="nav-item">
                 <a class="nav-link text-white" href="#property-form">
                     <i class="ni ni-fat-add text-lg opacity-10"></i>
                     <span class="nav-link-text ms-1">Add Property</span>

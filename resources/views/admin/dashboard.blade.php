@@ -29,16 +29,6 @@
                 </div>
             </div> --}}
 
-            <!-- Content Management -->
-            <div class="card border-0 shadow-sm rounded-3 mb-5">
-                <div class="card-header bg-primary text-white fw-semibold">
-                    <i class="bi bi-pencil-square me-2"></i> Website Content Management
-                </div>
-                <div class="card-body bg-white">
-                    <livewire:admin-site-content />
-                </div>
-            </div>
-
             <!-- Property Management -->
             <div class="card border-0 shadow-sm rounded-3">
                 <div class="card-header bg-secondary text-white fw-semibold">

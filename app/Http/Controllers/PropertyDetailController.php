@@ -20,15 +20,10 @@ class PropertyDetailController extends Controller
         // Sanitize map iframe to prevent XSS
         $sanitizedMapIframe = $this->sanitizeMapIframe($property->map_iframe);
 
-        // Optionally fetch similar properties (same type or location)
-        $similar = Property::where('id', '!=', $property->id)
-            ->where('is_published', true)
-            ->where('property_type', $property->property_type)
-            ->latest()
-            ->take(4)
-            ->get();
+        // Get recommended properties based on smart matching
+        $recommendedProperties = $property->getRecommendedProperties(6);
 
-        return view('pages.detail', compact('property', 'similar', 'sanitizedMapIframe'));
+        return view('pages.detail', compact('property', 'recommendedProperties', 'sanitizedMapIframe'));
     }
 
     /**

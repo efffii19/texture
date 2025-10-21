@@ -15,10 +15,6 @@ Route::get('/about', function () {
 
 Route::get('/listing', \App\Livewire\ListingPage::class)->name('listing');
 
-// Route::get('/detail', function () {
-//     return view('pages.detail');
-// })->name('detail');
-
 Route::get('/property/{slug}', [PropertyDetailController::class, 'show'])
     ->name('property.detail');
 

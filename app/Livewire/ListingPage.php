@@ -17,7 +17,15 @@ class ListingPage extends Component
     public $min_price = '';
     public $max_price = '';
 
-    public $layout = 'components.layouts.app';
+    public function mount()
+    {
+        $this->transaction_type = request()->query('transaction_type', '');
+        $this->property_type = request()->query('property_type', '');
+        $this->bedrooms = request()->query('bedrooms', '');
+        $this->location = request()->query('location', '');
+        $this->min_price = request()->query('min_price', '');
+        $this->max_price = request()->query('max_price', '');
+    }
 
     public function search()
     {

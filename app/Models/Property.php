@@ -120,4 +120,62 @@ class Property extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    /**
+     * Get recommended properties based on current property characteristics
+     *
+     * @param int $limit
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getRecommendedProperties($limit = 6)
+    {
+        // Get all potential recommendations first
+        $candidates = static::where('id', '!=', $this->id)
+            ->where('is_published', true)
+            ->get();
+
+        // Calculate relevance scores in PHP
+        $locationPattern = $this->location ?? '';
+        $scoredProperties = $candidates->map(function ($property) {
+            $score = 0;
+
+            // Location match (highest priority)
+            if (stripos($property->location ?? '', $this->location ?? '') !== false) {
+                $score += 100;
+            }
+
+            // Property type match
+            if ($property->property_type === $this->property_type) {
+                $score += 50;
+            }
+
+            // Bedroom match
+            if ($property->bedrooms == $this->bedrooms) {
+                $score += 30;
+            }
+
+            // Transaction type match
+            if ($property->transaction_type === $this->transaction_type) {
+                $score += 20;
+            }
+
+            // Price similarity (±30%)
+            if ($this->price > 0) {
+                $priceDiff = abs($property->price - $this->price) / $this->price;
+                if ($priceDiff <= 0.3) {
+                    $score += 40;
+                }
+            }
+
+            $property->relevance_score = $score;
+            return $property;
+        })
+        ->filter(function ($property) {
+            return $property->relevance_score > 0;
+        })
+        ->sortByDesc('relevance_score')
+        ->take($limit);
+
+        return $scoredProperties->values();
+    }
 }
