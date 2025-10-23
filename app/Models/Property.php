@@ -81,7 +81,7 @@ class Property extends Model
 
     public function getFirstImageUrlAttribute()
     {
-        $images = $this->images; // Uses the getImagesAttribute accessor
+        $images = $this->images;
         return !empty($images) ? asset('storage/' . $images[0]) : asset('images/pro1.jpg');
     }
 
@@ -129,37 +129,30 @@ class Property extends Model
      */
     public function getRecommendedProperties($limit = 6)
     {
-        // Get all potential recommendations first
         $candidates = static::where('id', '!=', $this->id)
             ->where('is_published', true)
             ->get();
 
-        // Calculate relevance scores in PHP
         $locationPattern = $this->location ?? '';
         $scoredProperties = $candidates->map(function ($property) {
             $score = 0;
 
-            // Location match (highest priority)
             if (stripos($property->location ?? '', $this->location ?? '') !== false) {
                 $score += 100;
             }
 
-            // Property type match
             if ($property->property_type === $this->property_type) {
                 $score += 50;
             }
 
-            // Bedroom match
             if ($property->bedrooms == $this->bedrooms) {
                 $score += 30;
             }
 
-            // Transaction type match
             if ($property->transaction_type === $this->transaction_type) {
                 $score += 20;
             }
 
-            // Price similarity (±30%)
             if ($this->price > 0) {
                 $priceDiff = abs($property->price - $this->price) / $this->price;
                 if ($priceDiff <= 0.3) {

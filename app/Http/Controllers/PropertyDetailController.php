@@ -12,15 +12,12 @@ class PropertyDetailController extends Controller
      */
     public function show($slug)
     {
-        // Find by slug, but only published properties should be visible publicly
         $property = Property::where('slug', $slug)
             ->where('is_published', true)
             ->firstOrFail();
 
-        // Sanitize map iframe to prevent XSS
         $sanitizedMapIframe = $this->sanitizeMapIframe($property->map_iframe);
 
-        // Get recommended properties based on smart matching
         $recommendedProperties = $property->getRecommendedProperties(6);
 
         return view('pages.detail', compact('property', 'recommendedProperties', 'sanitizedMapIframe'));
@@ -35,13 +32,10 @@ class PropertyDetailController extends Controller
             return null;
         }
 
-        // Check if it contains iframe tag
         if (!str_contains($iframe, '<iframe')) {
-            // If it's just a URL, treat as src
             return $this->validateIframeSrc($iframe) ? '<iframe src="' . e($iframe) . '" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>' : null;
         }
 
-        // Extract src from iframe
         preg_match('/src=["\']([^"\']+)["\']/', $iframe, $matches);
         if (!isset($matches[1])) {
             return null;
@@ -49,7 +43,7 @@ class PropertyDetailController extends Controller
         $src = $matches[1];
 
         if ($this->validateIframeSrc($src)) {
-            return $iframe; // Return original if valid
+            return $iframe;
         }
 
         return null;
